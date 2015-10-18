@@ -1,0 +1,63 @@
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<!--<div class="navbar-header">
+			<a class="navbar-brand" href="#">TS</a>
+			</div>-->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						
+						<div class="btn-group">
+							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+							  <span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span> {{vm.currentMonth | monthNumberToName}} {{vm.currentYear}} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+							  <li ng-repeat="monthPick in vm.monthPickerList">
+								  <a href="#" ng-click="vm.load(monthPick.month, monthPick.year)">{{monthPick.month | monthNumberToName}} {{monthPick.year}}</a>
+							  </il>
+							  <!--<li><a href="#" ng-click="vm.load(1, 2015)">January</a></li>
+							  <li><a href="#" ng-click="vm.load(2, 2015)">February</a></li>
+							  <li><a href="#" ng-click="vm.load(3, 2015)">March</a></li>
+							  <li><a href="#" ng-click="vm.load(4, 2015)">April</a></li>
+							  <li><a href="#" ng-click="vm.load(5, 2015)">May</a></li>
+							  <li><a href="#" ng-click="vm.load(6, 2015)">June</a></li>
+							  <li><a href="#" ng-click="vm.load(7, 2015)">July</a></li>
+							  <li><a href="#" ng-click="vm.load(8, 2015)">August</a></li>
+							  <li><a href="#" ng-click="vm.load(9, 2015)">September</a></li>
+							  <li><a href="#" ng-click="vm.load(10, 2015)">October</a></li>
+							  <li><a href="#" ng-click="vm.load(11, 2015)">November</a></li>
+							  <li><a href="#" ng-click="vm.load(12, 2015)">December</a></li>-->
+							</ul>
+						</div>
+					
+						<button type="button" class="btn btn-default" ng-class="{'btn-warning': vm.isDirty}" id="btnSave"  ng-click="vm.save()">
+							<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save
+						</button>
+						<button type="button" class="btn btn-default" ng-click="vm.showJson()">
+							<span class="glyphicon glyphicon-print" aria-hidden="true"></span> JSON
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</nav>
+	
+	
+	<div class="container">
+		<table id="sheetTable" class="table table-condensed">
+			<tr><th>Day</th><th>Start</th><th>End</th><th>Off day</th><th>Half day</th><th>Billable</th><th>Overtime</th><th>Total overtime</th><th>Note</th><th>Left</th></tr>
+		    <tr ng-repeat="day in vm.days | emptyFilter" class="{{day.date | alternatingBackgroundPerWeekFilter}}" >
+				<td><span class="date" ng-class="{'bg-danger': day.isDirty}">{{day.date | toLocalDateStringFilter}}</span></td>
+		        <td><input style="width:60px" class="start" ng-model="day.start" ng-disabled="day.offday" ng-change="vm.startChanged(day)" ></td>
+				<td><input style="width:60px" class="end" ng-model="day.end" ng-disabled="day.offday" ng-change="vm.endChanged(day)"></td>
+				<td><input type="checkbox" ng-model="day.offday" ng-change="vm.offdayChanged(day)"></td>
+				<td><input type="checkbox" ng-model="day.halfday" ng-change="vm.halfdayChanged(day)"></td>
+				<td><span>{{day.billableTime | inputFormatToHumanreadableFilter}}</span></td>
+				<td><span>{{day.overtime | inputFormatToHumanreadableFilter}}</span></td>
+				<td><span>{{day.totalOvertime | inputFormatToHumanreadableFilter}}</span></td>
+                <td><input style="width:100px" class="start" ng-model="day.note" ng-change="vm.noteChanged(day)"></td>
+				<td><span>{{day.timeLeft}}</span></td>
+			</tr>
+		</table>
+	</div>
